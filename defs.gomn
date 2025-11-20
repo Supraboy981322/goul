@@ -4,7 +4,7 @@
   ["wr"] := "\"fmt\""
 |
 ["fn"] := "func"
-["prim()"] := "main()"
+["prim"] := "main"
 ["wr"] := |
   ["wr"] := "fmt"
   ["l"] := "Println"
