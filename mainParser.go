@@ -9,8 +9,7 @@ func parse(in []string, out []string, defs gomn.Map, sub bool) []string {
 	for _, chunk := range in {
 		subFunc := strings.FieldsFunc(chunk, subFuncSplitter)
 		if len(subFunc) > 1 {
-			subDefs, ok := defs[subFunc[0]].(gomn.Map)
-			if !ok {
+			if subDefs, ok := defs[subFunc[0]].(gomn.Map); !ok {
 				out = append(out, chunk)
 			} else {
 				for _, subChunk := range subFunc {                   //
@@ -36,4 +35,14 @@ func parse(in []string, out []string, defs gomn.Map, sub bool) []string {
 		}
 	}
 	return out
+}
+
+func subFuncSplitter(r rune) bool {
+	if r == '"' {
+		isString = !isString
+		return false
+	} else if isString {
+		return false
+	}
+	return r == '.'
 }

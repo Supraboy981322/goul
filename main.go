@@ -13,11 +13,15 @@ var (
 	isString bool
 	killOnWarn bool
 	input []string
+	inputHeader []string
 	splitters []string
 	headEnd string
+	splitHead bool
+	splitHeadAt int
 	defsGlob gomn.Map
 	rcDefs gomn.Map	
-	imports gomn.Map
+	importsMap gomn.Map
+	importDefs gomn.Map
 	headDefs gomn.Map
 )
 
@@ -54,7 +58,12 @@ func init() {
 	strFile := string(inFile)
 	var trimmedFile []string
 	for _, line := range strings.Split(strFile, "\n") {
-		trimmedFile = append(trimmedFile, strings.TrimSpace(line))
+		if trimmedLine := strings.TrimSpace(line); trimmedLine != headEnd {
+			trimmedFile = append(trimmedFile, trimmedLine)
+		} else {
+			inputHeader = strings.FieldsFunc(strings.Join(trimmedFile, "\n"), whitespaceSplitter)
+			trimmedFile = []string{""}
+		}
 //		fmt.Println(line)
 	}
 	input = append(input, strings.Join(trimmedFile, "\n"))
@@ -65,15 +74,14 @@ func main() {
 
 	input := strings.FieldsFunc(input[0], whitespaceSplitter)
 
-	inputHeader := getHeader()
-	input = input[len(inputHeader):]
-
 	if headDefs, ok = rcDefs["head defs"].(gomn.Map); !ok {
 		kilOcont("head defs not defined")
 	}
 
-	if imports, ok = headDefs["imports"].(gomn.Map); !ok {
-		kilOcont("imports not defined, could be a non-problem")
+	if importsMap, ok = headDefs["imports"].(gomn.Map); !ok {
+		kilOcont("imports map not found, could be a non-problem")
+	} else if importDefs, ok = importsMap["defs"].(gomn.Map); !ok {
+		kilOcont("imports map found, but no definitions found") 
 	}
 
 	//parse the header
@@ -92,6 +100,9 @@ func main() {
 	//print it
 	//  (for testing, will be changed to write to file)
 	for i, chunk := range output {
+		if len(splitters)-1 < i {
+			splitters = append(splitters, "\n")
+		}
 		fmt.Print(chunk + splitters[i])
 	}//	fmt.Printf("new: %#v\n", output)
 }
@@ -115,31 +126,22 @@ func whitespaceSplitter(r rune) bool {
 	if r == '"' {
 		isString = !isString
 		return false
-	} else if isString{
+	} else if isString {
 		return false
 	} else {
 		switch r {
-		case '\n':
-			splitters = append(splitters, "\n")
+		case '\n', ' ':
+			splitters = append(splitters, string(r))
 			return true
-		case ' ':
-			splitters = append(splitters, " ")
-			return true
+			break
 		case '.':
 			splitters = append(splitters, ".")
+			return false
+		default:
+			break
 		}
 	}
 	return false
-}
-
-func subFuncSplitter(r rune) bool {
-	if isString {
-		return false
-	} else if r == '"' {
-		isString = true
-		return false
-	}
-	return r == '.'
 }
 
 func kilOcont(str string) {

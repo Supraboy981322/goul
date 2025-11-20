@@ -3,4 +3,5 @@ imp wr
 ;;;
 fn prim() {
   wr.l("foo bar baz qux")
+  wr.l("foo")
 }

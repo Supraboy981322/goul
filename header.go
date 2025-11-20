@@ -1,11 +1,17 @@
 package main
 
-func getHeader() []string {
+//import "github.com/charmbracelet/log"
+
+var (
+	isImp bool
+)
+
+func getHeader(in []string) []string {
 	var header []string
-	for i, val := range input {
+	for i, val := range in {
 		if val == headEnd {
-			header = input[:i]
-			input = input[i:]
+			header = in[:i]
+			input = in[i+1:]
 		}
 	}
 
@@ -15,8 +21,12 @@ func getHeader() []string {
 func parseHeader(in []string, out []string) []string {
 	for _, chunk := range in {
 		if newChunk, ok := headDefs[chunk].(string); ok {
-			subChunk, _ := headDefs[""].(string)
-			out = appOut(out, false, subChunk, newChunk)
+			out = append(out, newChunk)
+		} else if impDefs, ok := importsMap[chunk].(string); ok {
+			isImp = !isImp
+			out = append(out, impDefs)
+		} else if imp, ok := importDefs[chunk].(string); ok && isImp {
+			out = append(out, imp)
 		} else {
 			out = append(out, chunk)
 		}

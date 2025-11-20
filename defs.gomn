@@ -3,12 +3,9 @@
   ["head end"] := ";;;"
   ["head defs"] := |
     ["pkg"] := "package"
+    ["prim"] := "main"
     ["imports"] := |
-      ["pattern"] := |
-        ["imp"] := "import"
-        ["divider"] := " "
-      |
-  
+      ["imp"] := "import" 
       ["defs"] := |
         ["wr"] := "\"fmt\""
       |
