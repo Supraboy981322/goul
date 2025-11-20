@@ -1,0 +1,7 @@
+["foo"] := "bar"
+["fn"] := "func"
+["prim()"] := "main()"
+["wr"] := |
+  [0] := "fmt"
+  ["l"] := "Println"
+|
