@@ -1,4 +1,4 @@
-module gocl
+module goul
 
 go 1.24.9
 

@@ -1,4 +1,4 @@
-# GoCL (Go Custom Language) 
+# GoUL (Go User Language)
 
 a user-defined programming "language" transpiler
 
