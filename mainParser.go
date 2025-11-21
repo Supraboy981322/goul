@@ -6,12 +6,20 @@ import (
 )
 
 func parse(in []string, out []string, defs gomn.Map, sub bool) []string {
+	log.Debug("parse()")
+
 	for _, chunk := range in {
+		log.Debug("splitting to check for sub function")
 		subFunc := strings.FieldsFunc(chunk, subFuncSplitter)
+
 		if len(subFunc) > 1 {
+			log.Debug("detected as sub function")
+
 			if subDefs, ok := defs[subFunc[0]].(gomn.Map); !ok {
+				log.Debug("failed type assertion on sub function defs, appending chunk anyways")
 				out = append(out, chunk)
 			} else {
+				log.Debug("success with type assertion on sub function defs")
 				for _, subChunk := range subFunc {                   //
 					subChunkSplit := strings.Split(subChunk, "(")      //
 					newChunk, ok := subDefs[subChunkSplit[0]].(string) //

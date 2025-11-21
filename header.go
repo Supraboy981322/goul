@@ -7,14 +7,17 @@ var (
 )
 
 func getHeader(in []string) []string {
+	log.Debug("getting header")
 	var header []string
 	for i, val := range in {
 		if val == headEnd {
+			log.Debug("header ending matched")
 			header = in[:i]
 			input = in[i+1:]
 		}
 	}
 
+	log.Debug("returning header")
 	return header
 }
 	
