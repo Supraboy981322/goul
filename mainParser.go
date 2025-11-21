@@ -10,11 +10,12 @@ func parse(in []string, out []string, defs gomn.Map, sub bool) []string {
 	log.Debug("parse()")
 
 	for _, chunk := range in {
-		log.Debug("splitting to check for sub function")
+		log.Info("splitting to check for sub function")
 		subFunc := strings.FieldsFunc(chunk, subFuncSplitter)
+		log.Info("split subFunc:  ", subFunc)
 
 		if len(subFunc) > 1 {
-			log.Debug("detected as sub function")
+			log.Debug("detected as sub function:  ", subFunc)
 
 			if subDefs, ok := defs[subFunc[0]].(gomn.Map); !ok {
 				log.Debug("failed type assertion on sub function defs, appending chunk anyways")
@@ -39,7 +40,8 @@ func parse(in []string, out []string, defs gomn.Map, sub bool) []string {
 				subChunk, _ := defs[""].(string)
 				out = appOut(out, sub, subChunk, newChunk)
 			} else {
-				out = append(out, chunk)
+					out = append(out, chunk)
+				
 			}
 		}
 	}
@@ -52,6 +54,9 @@ func subFuncSplitter(r rune) bool {
 		return false
 	} else if isString {
 		return false
+	}
+	if r == '.' {
+		log.Debug("subFuncSplitter():  matched with dot")
 	}
 	return r == '.'
 }

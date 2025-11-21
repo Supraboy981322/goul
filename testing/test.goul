@@ -1,0 +1,22 @@
+pkg prim
+
+imp http
+imp wr
+imp er
+
+;;;
+
+fn prim() {
+  http.Han("/", listener)
+  wr.l("listening on port 8080")
+  err := http.Lis(":8080", nil)
+  if err != nil {
+    er.F("http.Lis:  ", err)
+  }
+}
+
+fn listener(w http.ResWr, r *http.Req) {
+  wr.l("request recieved")
+  w.Head.Set("Content-Type", "text/plain")
+  wr.fl(w, "goul test")
+}

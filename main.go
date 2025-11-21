@@ -59,11 +59,11 @@ func init() {
 	var trimmedFile []string
 	for _, line := range strings.Split(strFile, "\n") {
 		log.Debug(line)
-		if trimmedLine := strings.TrimSpace(line); trimmedLine != headEnd {
+		if trimmedLine := strings.TrimSpace(line); trimmedLine != headEnd && trimmedLine != "" {
 			log.Debug("not matched as head end")
 			log.Debug("adding trimmed line")
 			trimmedFile = append(trimmedFile, trimmedLine)
-		} else {
+		} else if trimmedLine != "" {
 			log.Debug("matched as head end")
 			log.Debug("storing input header separately")
 			log.Debug("joining header lines") 

@@ -35,6 +35,7 @@ func parseHeader(in []string, out []string) []string {
 		} else if imp, ok := importDefs[chunk].(string); ok && isImp {
 			log.Debug("matched import definition")
 			out = append(out, imp)
+			isImp = false
 		} else {
 			log.Debug("chunk unmatched, adding unchanged")
 			out = append(out, chunk)

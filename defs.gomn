@@ -1,8 +1,8 @@
 [0] := |
-  ["print output"] := false
+  ["print output"] := true
   ["write to file"] := true
-  ["kill on warn"] := false
-  ["debug"] := true
+  ["kill on warn"] := true
+  ["debug"] := false
   ["output file extension"] := "go"
   ["head end"] := ";;;"
   ["head defs"] := |
@@ -12,6 +12,9 @@
       ["imp"] := "import" 
       ["defs"] := |
         ["wr"] := "\"fmt\""
+        ["er"] := "\"log\""
+        ["http"] := "\"net/http\""
+        ["gomn"] := "\"https://github.com/Supraboy981322/gomn\""
       |
     |
   |
@@ -24,4 +27,31 @@
 ["wr"] := |
   ["wr"] := "fmt"
   ["l"] := "Println"
+  ["f"] := "Printf"
+  ["fl"] := "Fprintln"
+|
+
+["http"] := |
+  ["http"] := "http"
+  ["Lis"] := "ListenAndServe"
+  ["Han"] := "HandleFunc"
+  ["ResWr,"] := "ResponseWriter,"
+| 
+
+["*http"] := |
+  ["*http"] := "*http"
+  ["Req)"] := "Request)"
+|
+
+["w"] := |
+  ["w"] := "w"
+  ["Head"] := "Header()"
+  ["Set"] := "Set"
+|
+
+[","] := ","
+
+["er"] := |
+  ["er"] := "log"
+  ["F"] := "Fatal"
 |
