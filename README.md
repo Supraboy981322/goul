@@ -1,5 +1,7 @@
 # GoUL (Go User Language)
 
+### pronounced like "ghoul"
+
 a user-defined programming "language" transpiler
 
 >[!WARNING]
