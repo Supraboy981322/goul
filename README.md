@@ -7,7 +7,7 @@ a user-defined programming "language" transpiler
 
 ---
 
-basically, you create a definitions file like this:
+basically, you create definitions in a `defs.gomn` file like this:
 ```gomn
 ["fn"] := "func"
 ["prim()"] := "main()"
@@ -16,6 +16,7 @@ basically, you create a definitions file like this:
   ["l"] := "Println"
 |
 ```
+<p><sub><a href="https://github.com/Supraboy981322/gomn">in-case you're wondering what `gomn` is</a></sub></p>
 
 which (in this example) transpiles the following code to Go:
 ```
